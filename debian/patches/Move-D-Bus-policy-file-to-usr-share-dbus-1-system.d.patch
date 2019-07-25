@@ -1,0 +1,27 @@
+From: Michael Biebl <biebl@debian.org>
+Date: Tue, 27 Nov 2018 00:48:15 +0100
+Subject: Move D-Bus policy file to /usr/share/dbus-1/system.d/
+
+This is supported since dbus 1.9.18.
+The old location in /etc/dbus-1/system.d/ has been deprecated.
+
+https://lists.freedesktop.org/archives/dbus/2015-July/016746.html
+
+https://github.com/storaged-project/udisks/pull/597
+---
+ data/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/data/Makefile.am b/data/Makefile.am
+index b38928c..0f09cfe 100644
+--- a/data/Makefile.am
++++ b/data/Makefile.am
+@@ -8,7 +8,7 @@ dbusservice_DATA     = $(dbusservice_in_files:.service.in=.service)
+ $(dbusservice_DATA): $(dbusservice_in_files) Makefile
+ 	@sed -e "s|\@udisksdprivdir\@|$(libexecdir)/udisks2|" $< > $@
+ 
+-dbusconfdir = $(sysconfdir)/dbus-1/system.d
++dbusconfdir = $(datadir)/dbus-1/system.d
+ dbusconf_in_files = org.freedesktop.UDisks2.conf.in
+ dbusconf_DATA = $(dbusconf_in_files:.conf.in=.conf)
+ 

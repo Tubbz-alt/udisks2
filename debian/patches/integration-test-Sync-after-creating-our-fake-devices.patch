@@ -1,0 +1,37 @@
+From: Iain Lane <iainl@gnome.org>
+Date: Fri, 15 Feb 2019 11:48:05 +0000
+Subject: integration-test: Sync after creating our fake devices
+
+On Ubuntu ppc64el, the integration tests are almost always failing like
+this:
+
+  Traceback (most recent call last):
+    File "src/tests/integration-test", line 1788, in test_md_raid_methods
+      self.assertNotProperty(block_interface, 'mdraid-member', '/')
+    File "src/tests/integration-test", line 542, in assertNotProperty
+      self.assertNotEqual(obj.get_property(name), value)
+  AssertionError: '/' == '/'
+
+Upon investigation, it turns out that this is due to a race condition in
+the tests - when we use targetcli to create the devices, they are not
+seen by udev immediately, and consequently are not visible to udisks
+either. If an array is created in this period, this causes the
+MDRaidMember property to not be set. We can fix this problem by calling
+`sync()` before running any tests, to ensure that our devices are fully
+visible - as they would be if they were real devices.
+---
+ src/tests/integration-test | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/tests/integration-test b/src/tests/integration-test
+index 520b72a..eb6225f 100755
+--- a/src/tests/integration-test
++++ b/src/tests/integration-test
+@@ -1816,6 +1816,7 @@ class MDRaid(UDisksTestCase):
+     @classmethod
+     def setUpClass(cls):
+         cls.devices = setup_lio()
++        cls.sync()
+ 
+     @classmethod
+     def tearDownClass(cls):
