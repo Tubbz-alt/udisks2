@@ -1,0 +1,13 @@
+Index: udisks2-2.8.1/src/udiskslinuxfilesystem.c
+===================================================================
+--- udisks2-2.8.1.orig/src/udiskslinuxfilesystem.c
++++ udisks2-2.8.1/src/udiskslinuxfilesystem.c
+@@ -786,7 +786,7 @@ calculate_mount_options (UDisksDaemon  *
+   options_to_use = prepend_default_mount_options (fsmo, caller_uid, options, shared_fs);
+ 
+   /* validate mount options */
+-  str = g_string_new ("uhelper=udisks2,nodev,nosuid");
++  str = g_string_new ("uhelper=udisks2,nodev,nosuid,noexec");
+   g_hash_table_iter_init (&iter, options_to_use);
+   while (g_hash_table_iter_next (&iter, (gpointer*) &key, (gpointer*) &value))
+     {
