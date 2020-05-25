@@ -1,4 +1,4 @@
-udisks2 (2.8.1.1+dde) unstable; urgency=medium
+udisks2 (2.8.1.1-1+dde) unstable; urgency=medium
 
   * Cherry-pick commit to fix test race condition detected by Ubuntu ppc64el
 
