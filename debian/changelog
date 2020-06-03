@@ -1,4 +1,11 @@
-udisks2 (2.8.1.1+dde1) unstable; urgency=medium
+udisks2 (2.8.1.2-1+dde1) unstable; urgency=medium
+
+  * repair the U disk without noexec properties
+
+ -- Jeremy deepin <hushijia@uniontech.com>  Wed, 3 Jun 2020 16:57:01 -0500
+
+
+udisks2 (2.8.1-4) unstable; urgency=medium
 
   * Cherry-pick commit to fix test race condition detected by Ubuntu ppc64el
 
